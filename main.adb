@@ -1,6 +1,6 @@
+with Ada.Text_IO; use Ada.Text_IO;
 with Sequencer; use Sequencer;
 with Keyboard_Mappings; use Keyboard_Mappings;
-with Ada.Text_IO; use Ada.Text_IO;
 
 procedure Main is
    Button_Pressed : Character;
@@ -10,8 +10,8 @@ begin
       Ada.Text_IO.Get(Button_Pressed);
 
       case Button_Pressed is
-         when Play_Button =>
-         when Stop_Button => exit;
+         when Play_Button => Sequencer.start;
+         when Stop_Button => Sequencer.stop;
          when others => null;
       end case;
 

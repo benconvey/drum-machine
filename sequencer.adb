@@ -1,30 +1,42 @@
-with Input_Controller;
-with Pattern;
-with Ada.Interrupts.Names
-
 package body Sequencer is
 
-   Current_Pattern : Pattern.Pattern_Access_Type;
+   protected Play_Control is
+      procedure Set_Is_Playing(Playing : boolean);
+      entry Stop;
+      private
+      Is_Playing : Boolean := false;
+   end Play_Control;
 
+   protected body Play_Control is
 
-   Task Play is
+      procedure Set_Is_Playing(Playing: Boolean) is
+      begin
+         Is_Playing := Playing;
+      end Set_Is_Playing;
+
+      entry Stop when Is_Playing;
+
+   end Play_Control;
+
+   procedure start is
+      begin
+      Play_Control.Set_Is_Playing(true);
+   end start;
+
+   procedure stop is
+      begin
+      Play_Control.Set_Is_Playing(false);
+   end stop;
+
+   task Play_Loop is
    begin
       loop
-
-         -- A protected entry
-         Input_Controller.Play_Button.Was_Pressed;
          select
-            Input_Controller.Stop_Button.Was_Pressed
-              requeue
-         then
-
+            Play_Control.Stop
+         then exit;
+            Put_Line("hello");
          end select;
-
-
-      end loop;
-   end Play;
-
-begin
+   end Play_Loop;
 
 
 end Sequencer;
