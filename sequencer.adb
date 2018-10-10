@@ -14,7 +14,7 @@ package body Sequencer is
          Is_Playing := Playing;
       end Set_Is_Playing;
 
-      entry Stop when Is_Playing;
+      entry Stop when Is_Playing
 
    end Play_Control;
 
