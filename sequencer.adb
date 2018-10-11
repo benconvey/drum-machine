@@ -9,12 +9,17 @@ package body Sequencer is
 
    protected body Play_Control is
 
-      procedure Set_Is_Playing(Playing: Boolean) is
+      entry Wait_Till_Play_Pressed when not Is_Playing is
       begin
-         Is_Playing := Playing;
+         Is_Playing := true;
       end Set_Is_Playing;
 
-      entry Stop when Is_Playing
+      entry Stop_Playing when Is_Playing is
+      begin
+         Is_Playing := false;
+         requeue
+
+
 
    end Play_Control;
 
@@ -32,7 +37,7 @@ package body Sequencer is
    begin
       loop
          select
-            Play_Control.Stop
+               Play_Control.Stop
          then exit;
             Put_Line("hello");
          end select;
