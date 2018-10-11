@@ -1,25 +1,32 @@
+with Ada.Text_IO; use Ada.Text_IO;
+
 package body Sequencer is
 
    protected Play_Control is
-      procedure Set_Is_Playing(Playing : boolean);
-      entry Stop;
+      entry Wait_Till_Played;
+      entry Continue_Till_Stopped;
+      procedure Set_Is_Playing(Playing: Boolean);
       private
       Is_Playing : Boolean := false;
    end Play_Control;
 
    protected body Play_Control is
 
-      entry Wait_Till_Play_Pressed when not Is_Playing is
+      entry Wait_Till_Played when Is_Playing is
       begin
          Is_Playing := true;
-      end Set_Is_Playing;
+      end Wait_Till_Played;
 
-      entry Stop_Playing when Is_Playing is
+      entry  Continue_Till_Stopped when Is_Playing is
       begin
          Is_Playing := false;
-         requeue
+         requeue Wait_Till_Played;
+      end Continue_Till_Stopped;
 
-
+      procedure Set_Is_Playing(Playing : Boolean) is
+      begin
+         Is_Playing := Playing;
+      end Set_Is_Playing;
 
    end Play_Control;
 
@@ -33,14 +40,23 @@ package body Sequencer is
       Play_Control.Set_Is_Playing(false);
    end stop;
 
-   task Play_Loop is
+   task Play_Loop;
+
+   task body Play_Loop is
    begin
+      Put_Line("Sequencer intialised");
+      Play_Control.Wait_Till_Played;
       loop
          select
-               Play_Control.Stop
-         then exit;
-            Put_Line("hello");
+            Play_Control.Continue_Till_Stopped;
+         else
+            loop
+               Put_Line("In the loop");
+            end loop;
+
          end select;
+
+      end loop;
    end Play_Loop;
 
 

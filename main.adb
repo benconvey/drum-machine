@@ -7,8 +7,10 @@ procedure Main is
 begin
 
    loop
+      Put_Line("waiting for input");
       Ada.Text_IO.Get(Button_Pressed);
 
+      Put_Line("starting");
       case Button_Pressed is
          when Play_Button => Sequencer.start;
          when Stop_Button => Sequencer.stop;
