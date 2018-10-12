@@ -4,18 +4,25 @@ with Keyboard_Mappings; use Keyboard_Mappings;
 
 procedure Main is
    Button_Pressed : Character;
-begin
 
-   loop
-      Put_Line("waiting for input");
-      Ada.Text_IO.Get(Button_Pressed);
+   task Main_task;
 
-      Put_Line("starting");
-      case Button_Pressed is
+   task body Main_Task is
+   begin
+      loop
+         Put_Line("waiting for input");
+         Ada.Text_IO.Get(Button_Pressed);
+
+         Put_Line("starting");
+         case Button_Pressed is
          when Play_Button => Sequencer.start;
          when Stop_Button => Sequencer.stop;
          when others => null;
-      end case;
+         end case;
+      end loop;
+   end Main_Task;
 
-   end loop;
+begin
+   null;
+
 end Main;
