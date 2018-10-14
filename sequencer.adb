@@ -4,9 +4,9 @@ package body Sequencer is
 
    protected Play_Control is
       entry Wait_Till_Played;
-      entry Continue_Till_Stopped;
       procedure Set_Is_Playing(Playing: Boolean);
-      private
+      function Get_Is_Playing return Boolean;
+   private
       Is_Playing : Boolean := false;
    end Play_Control;
 
@@ -14,21 +14,18 @@ package body Sequencer is
 
       entry Wait_Till_Played when Is_Playing is
       begin
-         Put_Line("Wait_Till_Played");
-      end Wait_Till_Played;
 
-      entry  Continue_Till_Stopped when true is
-      begin
-         Put_Line("Contineu_Till_Stopped - Is_Playing = " &  Is_Playing'Image);
-         Is_Playing := false;
-         requeue Wait_Till_Played;
-      end Continue_Till_Stopped;
+      end Wait_Till_Played;
 
       procedure Set_Is_Playing(Playing : Boolean) is
       begin
-         Put_Line("In Set_Is_Playing" & Playing'Image);
          Is_Playing := Playing;
       end Set_Is_Playing;
+
+      function Get_Is_Playing return boolean is
+      begin
+         return Is_PLaying;
+      end Get_Is_Playing;
 
    end Play_Control;
 
@@ -48,18 +45,17 @@ package body Sequencer is
    begin
       Put_Line("Sequencer intialised");
 
+
       loop
-         Play_Control.Wait_Till_Played;
-         select
-            Play_Control.Continue_Till_Stopped;
-            exit;
-         else
+         if Play_Control.Get_Is_Playing then
             loop
+               exit when not Play_Control.Get_Is_Playing;
                delay Standard.Duration(1);
+               Put_Line("In the loop");
             end loop;
-
-         end select;
-
+         else
+            Play_Control.Wait_Till_Played;
+         end if;
       end loop;
    end Play_Loop;
 

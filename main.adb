@@ -13,11 +13,10 @@ procedure Main is
          Put_Line("waiting for input");
          Ada.Text_IO.Get(Button_Pressed);
 
-         Put_Line("starting");
          case Button_Pressed is
-         when Play_Button => Sequencer.start;
-         when Stop_Button => Sequencer.stop;
-         when others => null;
+            when Play_Button => Sequencer.start;
+            when Stop_Button => Sequencer.stop;
+            when others => null;
          end case;
       end loop;
    end Main_Task;
