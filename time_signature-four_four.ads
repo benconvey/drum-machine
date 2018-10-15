@@ -1,9 +1,7 @@
 package Time_Signature.Four_four is
 
-   type Instance_Type is private;
-   type Instance_Type_Access is access all Instance_Type;
+   type Instance is private;   
    
-   function Instance  return Instance_Type_Access;      
       
 private   
       

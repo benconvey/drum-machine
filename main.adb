@@ -16,6 +16,8 @@ procedure Main is
          case Button_Pressed is
             when Play_Button => Sequencer.start;
             when Stop_Button => Sequencer.stop;
+            when Pattern_1 , Pattern_2 => Sequencer.Switch_Pattern(Button_Pressed);
+            when Kick_Drum, Snare_Drum => Sequencer.Update_Sequence(Button_Pressed);
             when others => null;
          end case;
       end loop;
