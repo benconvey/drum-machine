@@ -1,14 +1,5 @@
 package body Pattern is
 
-   --------------
-   -- Instance --
-   --------------
-
-   function Instance return Pattern_Access_Type is
-   begin
-      return new Pattern_Type;
-   end Instance;
-
    -----------
    -- Tempo --
    -----------
@@ -26,15 +17,6 @@ package body Pattern is
    begin
       return This.Time_Signature;
    end Time_Signature;
-
-   --------
-   -- Id --
-   --------
-
-   function Id (This: Pattern_Type) return Pattern_Identifier_Type is
-   begin
-      return This.Id;
-   end Id;
 
    ----------
    -- Bars --

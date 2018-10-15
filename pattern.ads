@@ -3,14 +3,11 @@ with Step; use Step;
 
 package Pattern is   
    
-   type Pattern_Type is private;
-   type Pattern_Identifier_Type is private;
+   type Instance is private;
    type Bars_Type is private; 
    type Pattern_Step_Index_Type is private;   
          
-   function Tempo (This: Pattern_Type) return Integer;  
-   
-   function Id (This: Pattern_Type)    return Pattern_Identifier_Type;   
+   function Tempo (This: Pattern_Type) return Integer;    
    
    function Bars (This: Pattern_Type)  return Bars_Type; 
    
@@ -20,20 +17,17 @@ package Pattern is
    
 private
       
-   type Bars_Type is range 0..2;
-               
-   type Pattern_Identifier_Type is (A1, A2, A3, A4, B1, B2, B3, B4);
-   
+   type Bars_Type is range 0..2;                  
    type Numer_Of_Steps : Integer := 64
    type Pattern_Step_Index_Type is Natural 1 .. Number_Of_Steps;
    
    type Steps is array( Pattern_Step_Index_Type ) of Step.Instance;
    type Active_Step is 1 mod Number_Of_Steps;
    
-   type Pattern_Type is tagged record
+   type Instance is tagged record
       Tempo             : Integer range 40..400;
       ID                : Pattern_Identifier_Type   := A1;
-      Bars              : Bars_Type := 2;
+      Bars              : Bars_Type := 1;
       Time_Signature    : Time_Signature_Access_Type;
    end record;                   
    
