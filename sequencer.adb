@@ -1,5 +1,5 @@
-with Ada.Text_IO; use Ada.Text_IO;
-with Keyboard_Mappings; use Keyboard_Mappings;
+with Ada.Text_IO, Keyboard_Mappings, Pattern;
+use Ada.Text_IO, Keyboard_Mappings, Pattern;
 
 package body Sequencer is
 
@@ -30,6 +30,24 @@ package body Sequencer is
 
    end Play_Control;
 
+   protected Active_Pattern is
+      function Get_Active_Pattern return Pattern_Type;
+      entry Set_Active_Pattern;
+   private
+      Active_Pattern: Pattern_Type;
+   end Active_Pattern;
+
+   protected body Active_Pattern is
+
+      function Get_Active_Pattern return Pattern_Type is
+      begin
+         return Active_Pattern;
+      end Active_Pattern;
+
+      entry Set_Active_Pattern when
+
+
+
    procedure start is
    begin
       Play_Control.Set_Is_Playing(true);
@@ -42,11 +60,17 @@ package body Sequencer is
 
    task Play_Loop;
 
-   procedure Switch_Pattern(Pattern_Name : Character) is
+   procedure Switch_Pattern(Pattern: Character) is
    begin
-
+      null;
    end Switch_Pattern;
 
+   procedure Update_Pattern(Instrument : Character) is
+   begin
+      null;
+   end Update_Pattern;
+
+   Active_Pattern : Pattern_Type := Pattern.Basic_Beat;
 
    task body Play_Loop is
    begin
@@ -59,7 +83,7 @@ package body Sequencer is
          Inner_Loop: loop
 
             -- Resolve the pattern
-            if Active_Pattern.Get_Next_Step.Is_Active
+            if Active_Pattern.Get_Next_Step.Is_Active then
               Put_Line("Step active" & Active_Pattern.Get_Next_Step.Instrument'Image);
             end if;
 
@@ -72,7 +96,5 @@ package body Sequencer is
          end loop Inner_Loop;
       end loop;
    end Play_Loop;
-
-   Active_Pattern := Keyboard_Mappings.Pattern_1;
 
 end Sequencer;

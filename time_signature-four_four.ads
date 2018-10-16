@@ -1,4 +1,4 @@
-package Time_Signature.Four_four is
+package Time_Signatures.Four_four is
 
    type Instance is private;   
    
