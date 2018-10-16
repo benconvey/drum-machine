@@ -25,28 +25,10 @@ package body Sequencer is
 
       function Get_Is_Playing return boolean is
       begin
-         return Is_PLaying;
+         return Is_Playing;
       end Get_Is_Playing;
 
    end Play_Control;
-
-   protected Active_Pattern is
-      function Get_Active_Pattern return Pattern_Type;
-      entry Set_Active_Pattern;
-   private
-      Active_Pattern: Pattern_Type;
-   end Active_Pattern;
-
-   protected body Active_Pattern is
-
-      function Get_Active_Pattern return Pattern_Type is
-      begin
-         return Active_Pattern;
-      end Active_Pattern;
-
-      entry Set_Active_Pattern when
-
-
 
    procedure start is
    begin
@@ -70,7 +52,7 @@ package body Sequencer is
       null;
    end Update_Pattern;
 
-   Active_Pattern : Pattern_Type := Pattern.Basic_Beat;
+   Active_Pattern : Pattern_Type := Pattern.Get_Basic_Beat;
 
    task body Play_Loop is
    begin
@@ -83,7 +65,7 @@ package body Sequencer is
          Inner_Loop: loop
 
             -- Resolve the pattern
-            if Active_Pattern.Get_Next_Step.Is_Active then
+            if Active_Pattern.Get_Next_Step.Active then
               Put_Line("Step active" & Active_Pattern.Get_Next_Step.Instrument'Image);
             end if;
 

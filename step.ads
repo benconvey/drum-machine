@@ -1,7 +1,7 @@
 package Step is
    
    -- ADT
-   type Step_Type is private;      
+   type Step_Type is tagged private;      
    
    -- ADT instance methods
    function Instrument (This : Step_Type) return Character;
@@ -11,7 +11,7 @@ package Step is
       
 private   
    
-   type Step_Type is record            
+   type Step_Type is tagged record            
       Instrument  : Character;      
       Velocity    : Integer; 
       Offset      : Integer;      
