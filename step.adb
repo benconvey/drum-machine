@@ -2,12 +2,12 @@ package body Step is
 
    function Instrument (This : Step_Type) return Character is
    begin
-      return This.Instruemnt;
+      return This.Instrument;
    end Instrument;
 
    function Velocity (This : Step_Type) return Integer is
    begin
-      return This.Velocity
+      return This.Velocity;
    end Velocity;
 
    function Offset (This : Step_Type) return Integer is

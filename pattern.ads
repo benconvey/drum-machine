@@ -7,8 +7,6 @@ package Pattern is
    
    -- ADT components
    type Bars_Type is private; 
-   Pattern_Step_Index_Type is private;   
-
          	
    -- ADT instance methods
    function Tempo (This: Pattern_Type) return Integer;       
@@ -19,13 +17,12 @@ package Pattern is
    function Get_Basic_Beat return Pattern_Type;
    
 private
-      
+        
    type Bars_Type is range 0..2;                  
-   Number_Of_Steps : constant Integer := 32;
-   subtype Pattern_Step_Index_Type is Natural range  1 .. Number_Of_Steps;
-   type Active_Step_Type is mod Pattern_Step_Index_Type;
+   Number_Of_Steps : constant Natural := 32;
    
-   type Steps_Type is array( Pattern_Step_Index_Type ) of Step_Type
+   type Active_Step_Type is mod Number_Of_Steps;   
+   type Steps_Type is array( Active_Step_Type ) of Step_Type;
 
    
    type Pattern_Type is tagged record
@@ -35,7 +32,10 @@ private
       Active_Step       : Active_Step_Type := 1;
    end record;                   
    
-      -- Package variable
---   Basic_Beat : Pattern_Type := (tempo => 125);
+   -- Package variable
+   Basic_Beat : Pattern_Type := 
+     ( Tempo => 125, 
+       Steps => Steps_Type'(1..31 => Step_Type'(Instrument => 'K', Velocity => 127, Offset => 0, Active => False)), 
+       others => <> );
    
 end Pattern;

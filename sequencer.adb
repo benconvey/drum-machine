@@ -40,7 +40,7 @@ package body Sequencer is
       Play_Control.Set_Is_Playing(false);
    end stop;
 
-   task Play_Loop;
+
 
    procedure Switch_Pattern(Pattern: Character) is
    begin
@@ -53,6 +53,8 @@ package body Sequencer is
    end Update_Pattern;
 
    Active_Pattern : Pattern_Type := Pattern.Get_Basic_Beat;
+
+   task Play_Loop;
 
    task body Play_Loop is
    begin

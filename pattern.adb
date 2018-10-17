@@ -11,10 +11,8 @@ package body Pattern is
    end Bars;
 
    function Get_Next_Step(This : Pattern_Type) return Step_Type is
-      Current_Step : Integer;
    begin
-      Current_Step := Integer( This.Active_Step );
-      return This.Steps( Current_Step + 1);
+      return This.Steps( This.Active_Step + 1);
    end Get_Next_Step;
 
    function Get_Basic_Beat return Pattern_Type is
