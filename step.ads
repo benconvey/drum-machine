@@ -12,10 +12,10 @@ package Step is
 private   
    
    type Step_Type is tagged record            
-      Instrument  : Character := z;      
+      Instrument  : Character := 'z';      
       Velocity    : Integer := 127; 
       Offset      : Integer := 0;      
-      Active      : Boolean := false;
+      Active      : Boolean := true;
    end record;
    
 end Step;

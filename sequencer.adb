@@ -66,9 +66,11 @@ package body Sequencer is
 
          Inner_Loop: loop
 
+            Put_Line("Sequencer");
+
             -- Resolve the pattern
             if Active_Pattern.Get_Next_Step.Active then
-              Put_Line("Step active" & Active_Pattern.Get_Next_Step.Instrument'Image);
+              Put_Line("Step active " & Active_Pattern.Get_Next_Step.Instrument'Image);
             end if;
 
             delay Standard.Duration(1);

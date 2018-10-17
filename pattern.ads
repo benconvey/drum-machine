@@ -35,7 +35,7 @@ private
    -- Package variable
    Basic_Beat : Pattern_Type := 
      ( Tempo => 125, 
-       Steps => Steps_Type'(1..31 => Step_Type'(Instrument => 'K', Velocity => 127, Offset => 0, Active => False)), 
+       Steps => <>, 
        others => <> );
    
 end Pattern;
