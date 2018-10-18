@@ -42,7 +42,11 @@ private
    -- Package variable
    Basic_Beat : Pattern_Type := 
      ( Tempo => 125, 
+<<<<<<< HEAD
        Steps => Steps_Type'(0..31 => Step.Initialise(Instrument => 'K', Velocity => 127, Offset => 0, Active => True)), 
+=======
+       Steps => <>, 
+>>>>>>> c6e3e04c22c431e91b9021da675e4d986913b76f
        others => <> );
    
 end Pattern;

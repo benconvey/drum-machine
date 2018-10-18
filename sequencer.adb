@@ -67,6 +67,8 @@ package body Sequencer is
 
          Inner_Loop: loop
 
+            Put_Line("Sequencer");
+
             -- Resolve the pattern
             if Active_Pattern.Next_Step_Is_Active then
                Active_Step := Active_Pattern.Current_Step;
