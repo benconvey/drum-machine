@@ -1,5 +1,5 @@
-with Ada.Text_IO, Keyboard_Mappings, Pattern;
-use Ada.Text_IO, Keyboard_Mappings, Pattern;
+with Ada.Text_IO, Keyboard_Mappings, Pattern, Step;
+use Ada.Text_IO, Keyboard_Mappings, Pattern, Step;
 
 package body Sequencer is
 
@@ -57,6 +57,7 @@ package body Sequencer is
    task Play_Loop;
 
    task body Play_Loop is
+      Active_Step : Step_Type;
    begin
       Put_Line("Sequencer intialised");
 
@@ -67,8 +68,12 @@ package body Sequencer is
          Inner_Loop: loop
 
             -- Resolve the pattern
-            if Active_Pattern.Get_Next_Step.Active then
-              Put_Line("Step active" & Active_Pattern.Get_Next_Step.Instrument'Image);
+            if Active_Pattern.Next_Step_Is_Active then
+               Active_Step := Active_Pattern.Current_Step;
+               Put_Line(" " & Active_Step.Instrument );
+               Active_Pattern.Increment_Active_Step;
+            else
+               Put_Line(Active_Pattern.Active_Step 'Image);
             end if;
 
             delay Standard.Duration(1);
