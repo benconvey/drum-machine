@@ -16,7 +16,7 @@ package Pattern is
    function Steps (This: Pattern_Type) return Steps_Type;   
    function Active_Step(This: Pattern_Type) return Active_Step_Type;
    
-   procedure Increment_Active_Step(This: Pattern_Type);
+   procedure Increment_Active_Step(This :in out Pattern_Type);
    function Current_Step(This: Pattern_Type) return Step_Type;
    function Next_Step_Is_Active(This: Pattern_Type ) return Boolean;   
    
@@ -42,11 +42,7 @@ private
    -- Package variable
    Basic_Beat : Pattern_Type := 
      ( Tempo => 125, 
-<<<<<<< HEAD
        Steps => Steps_Type'(0..31 => Step.Initialise(Instrument => 'K', Velocity => 127, Offset => 0, Active => True)), 
-=======
-       Steps => <>, 
->>>>>>> c6e3e04c22c431e91b9021da675e4d986913b76f
        others => <> );
    
 end Pattern;

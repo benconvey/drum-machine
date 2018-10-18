@@ -25,7 +25,7 @@ package body Pattern is
       return This.Active_Step;
    end Active_Step;
 
-   procedure Increment_Active_Step(This: in out Pattern_Type) is
+   procedure Increment_Active_Step(This : in out Pattern_Type)  is
    begin
       This.Active_Step := This.Active_Step + 1;
    end Increment_Active_Step;
