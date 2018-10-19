@@ -36,13 +36,15 @@ private
       Tempo             : Integer range 40..400;
       Bars              : Bars_Type := 1;
       Steps             : Steps_Type;
-      Active_Step       : Active_Step_Type := 1;
+      Active_Step       : Active_Step_Type := 0;
    end record;                   
    
    -- Package variable
    Basic_Beat : Pattern_Type := 
      ( Tempo => 125, 
-       Steps => Steps_Type'(0..31 => Step.Initialise(Instrument => 'K', Velocity => 127, Offset => 0, Active => True)), 
+       Steps => Steps_Type'(
+         0|4|8|12|16|20|24|28 => Step.Initialise('K', 127, 0, True),
+         others => Step.Initialise('H', 127 ,0, true)), 
        others => <> );
    
 end Pattern;
