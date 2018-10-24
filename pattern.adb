@@ -1,3 +1,5 @@
+with Ada.Text_IO, Ada.Strings.Fixed; use Ada.Text_IO, Ada.Strings.Fixed;
+
 package body Pattern is
 
    function Tempo (This: Pattern_Type) return Integer is
@@ -9,11 +11,6 @@ package body Pattern is
    begin
       return This.Bars;
    end Bars;
-
-   function Next_Step_Is_Active(This : Pattern_Type) return Boolean is
-   begin
-      return This.Steps(This.Active_Step + 1).Active;
-   end Next_Step_Is_Active;
 
    function Get_Basic_Beat return Pattern_Type is
    begin
@@ -30,15 +27,37 @@ package body Pattern is
       This.Active_Step := This.Active_Step + 1;
    end Increment_Active_Step;
 
-   function Current_Step(This: Pattern_Type) return Step_Type is
-   begin
-      return This.Steps(This.Active_Step);
-   end Current_Step;
 
    function Steps(this: Pattern_Type) return Steps_Type is
    begin
       return This.Steps;
    end Steps;
+
+   function Build_Instrument_Debug_Line(This:Pattern_Type; Instrument_Index: in Integer) return String;
+
+   procedure Debug_Print(This:Pattern_Type) is
+   begin
+      Put(ASCII.ESC & "[2J");
+      for index in 1..Number_Of_Instruments loop
+         Put_Line(Build_Instrument_Debug_Line(This, index));
+      end loop;
+   end;
+
+   function Build_Instrument_Debug_Line(This: Pattern_Type; Instrument_Index : in Integer) return String is
+      Instrument_Line :  Step_Row_Type;
+      Result : String(1..32) :=( others => ' ');
+   begin
+      Instrument_Line := This.Steps(Instrument_Index);
+      for Index in Instrument_Line'Range loop
+
+         Result := Result & (if Instrument_Line(Index).Active then Instrument_Line(Index).Instrument else '.';
+                             end loop;
+
+                             return Result;
+
+
+   end Build_Instrument_Debug_Line;
+
 
 
 end Pattern;

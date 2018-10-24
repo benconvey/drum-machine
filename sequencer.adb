@@ -57,7 +57,6 @@ package body Sequencer is
    task Play_Loop;
 
    task body Play_Loop is
-      Current_Step : Step_Type;
    begin
       Put_Line("Sequencer intialised");
 
@@ -67,16 +66,9 @@ package body Sequencer is
 
          Inner_Loop: loop
 
-            Current_Step := Active_Pattern.Current_Step;
+            Active_Pattern.Debug_Print;
 
-            -- Resolve the pattern
-            if Active_Step.Active then
-               Put_Line("" & Active_Step.Instrument );
-            else
-               Put_Line(".");
-            end if;
-
-            Current_Step.Increment_Active_Step;
+            Active_Pattern.Increment_Active_Step;
 
             delay Standard.Duration(1);
 
