@@ -47,8 +47,8 @@ private
        Steps => Steps_Type'(
          1 => Step_Row_Type'(1|4|8|12|16|20|24|28 => Step.Initialise('K', 127, 0, True), others => Step.Initialise('K', 0 ,0, false)),         
          2 => Step_Row_Type'(4|12|20|28 => Step.Initialise('S', 127, 0, True), others => Step.Initialise('S', 0 ,0, false)),
-         3 => Step_Row_Type'(others => Step.Initialise('H', 127, 0, True)),
-         4 => Step_Row_Type'(others => Step.Initialise('T', 127, 0, False))         
+         3 => Step_Row_Type'(others => Step.Initialise('H', 0, 0, True)),
+         4 => Step_Row_Type'(others => Step.Initialise('T', 0, 0, False))         
         ),others => <>
       );
    

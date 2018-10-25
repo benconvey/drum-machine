@@ -45,16 +45,19 @@ package body Pattern is
 
    function Build_Instrument_Debug_Line(This: Pattern_Type; Instrument_Index : in Integer) return String is
       Instrument_Line :  Step_Row_Type;
-      Result : String(1..32) :=( others => ' ');
+      Result : String(1..32);
    begin
+      -- Get a line of steps
       Instrument_Line := This.Steps(Instrument_Index);
+
+
       for Index in Instrument_Line'Range loop
 
-         Result := Result & (if Instrument_Line(Index).Active then Instrument_Line(Index).Instrument else '.';
-                             end loop;
+         Result(Instrument_Index) :=  (if Instrument_Line(Index).Active then Instrument_Line(Index).Instrument else '.');
 
-                             return Result;
+      end loop;
 
+      return Result;
 
    end Build_Instrument_Debug_Line;
 

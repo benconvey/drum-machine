@@ -76,6 +76,7 @@ package body Sequencer is
                exit Inner_Loop;
             end if;
 
+
          end loop Inner_Loop;
       end loop;
    end Play_Loop;
