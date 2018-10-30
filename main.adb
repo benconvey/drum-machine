@@ -10,7 +10,6 @@ procedure Main is
    task body Main_Task is
    begin
       loop
-         Put_Line("waiting for input");
          Ada.Text_IO.Get(Button_Pressed);
 
          case Button_Pressed is

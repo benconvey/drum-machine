@@ -40,6 +40,10 @@ package body Sequencer is
       Play_Control.Set_Is_Playing(false);
    end stop;
 
+   function Is_Playing return Boolean is
+   begin
+      return Play_Control.Get_Is_Playing;
+   end;
 
 
    procedure Switch_Pattern(Pattern: Character) is
@@ -58,7 +62,6 @@ package body Sequencer is
 
    task body Play_Loop is
    begin
-      Put_Line("Sequencer intialised");
 
       loop
 

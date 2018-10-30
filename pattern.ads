@@ -1,4 +1,4 @@
-with Step; use Step;
+with Step, Sequencer; use Step, Sequencer;
 
 package Pattern is   
          

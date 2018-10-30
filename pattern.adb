@@ -37,9 +37,11 @@ package body Pattern is
 
    procedure Debug_Print(This:Pattern_Type) is
    begin
-      Put(ASCII.ESC & "[2J");
+      Put(ASCII.ESC & "[H");
+      Put_Line("Active Step: " & This.Active_Step'Image);
+      Put_Line((if Sequencer.Is_Playing then "Play" else "Paused"));
       for index in 1..Number_Of_Instruments loop
-         Put_Line(Build_Instrument_Debug_Line(This, index));
+         Put_Line(This.Build_Instrument_Debug_Line(index));
       end loop;
    end;
 
