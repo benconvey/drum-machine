@@ -56,6 +56,36 @@ package body Sequencer is
       null;
    end Update_Pattern;
 
+   procedure Debug_Print(Current_Pattern:Pattern_Type) is
+   begin
+      Put(ASCII.ESC & "[H");
+      Put_Line("Active Step: " & Pattern.Active_Step'Image);
+      Put_Line("Playing: " & (if Is_Playing then "Playing" else "Paused"));
+      for index in 1..Pattern.Number_Of_Instruments loop
+         Put_Line(Build_Instrument_Debug_Line(index));
+      end loop;
+   end;
+
+   function Build_Instrument_Debug_Line(Instrument_Index : in Integer) return String is
+      Instrument_Line :  Step_Row_Type;
+      Result : String(1..32);
+   begin
+      -- Get a line of steps
+      Instrument_Line := This.Steps(Instrument_Index);
+
+
+      for Index in Instrument_Line'Range loop
+
+         Result(Instrument_Index) :=  (if Instrument_Line(Index).Active then Instrument_Line(Index).Instrument else '.');
+
+      end loop;
+
+      return Result;
+
+   end Build_Instrument_Debug_Line;
+
+
+
    Active_Pattern : Pattern_Type := Pattern.Get_Basic_Beat;
 
    task Play_Loop;

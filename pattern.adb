@@ -33,36 +33,5 @@ package body Pattern is
       return This.Steps;
    end Steps;
 
-   function Build_Instrument_Debug_Line(This:Pattern_Type; Instrument_Index: in Integer) return String;
-
-   procedure Debug_Print(This:Pattern_Type) is
-   begin
-      Put(ASCII.ESC & "[H");
-      Put_Line("Active Step: " & This.Active_Step'Image);
-      Put_Line((if Sequencer.Is_Playing then "Play" else "Paused"));
-      for index in 1..Number_Of_Instruments loop
-         Put_Line(This.Build_Instrument_Debug_Line(index));
-      end loop;
-   end;
-
-   function Build_Instrument_Debug_Line(This: Pattern_Type; Instrument_Index : in Integer) return String is
-      Instrument_Line :  Step_Row_Type;
-      Result : String(1..32);
-   begin
-      -- Get a line of steps
-      Instrument_Line := This.Steps(Instrument_Index);
-
-
-      for Index in Instrument_Line'Range loop
-
-         Result(Instrument_Index) :=  (if Instrument_Line(Index).Active then Instrument_Line(Index).Instrument else '.');
-
-      end loop;
-
-      return Result;
-
-   end Build_Instrument_Debug_Line;
-
-
 
 end Pattern;

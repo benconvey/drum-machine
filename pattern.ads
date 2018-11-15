@@ -1,4 +1,4 @@
-with Step, Sequencer; use Step, Sequencer;
+with Step; use Step;
 
 package Pattern is   
          
@@ -20,14 +20,14 @@ package Pattern is
    
    -- Static methods
    function Get_Basic_Beat return Pattern_Type;
-   procedure Debug_Print(This:Pattern_Type);
    
+   -- Static data
+   Number_Of_Instruments :constant Integer := 4;
    
 private
         
    type Bars_Type is range 0..2;                  
-   Number_Of_Steps : constant Integer := 32;
-   Number_Of_Instruments :constant Integer := 4;   
+   Number_Of_Steps : constant Integer := 32;   
    type Active_Step_Type is mod Number_Of_Steps; 
    
    type Step_Row_Type is array( 1..Number_Of_Steps) of Step_Type;
