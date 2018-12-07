@@ -56,12 +56,14 @@ package body Sequencer is
       null;
    end Update_Pattern;
 
-   procedure Debug_Print(Current_Pattern:Pattern_Type) is
+   procedure Debug_Print(Pattern:Pattern_Type) is
+      Number : Active_Step_Type;
    begin
+      Number := Pattern.Active_Step;
       Put(ASCII.ESC & "[H");
-      Put_Line("Active Step: " & Pattern.Active_Step'Image);
+      Put_Line("Active Step: " & Active_Step_Type'Image(Number));
       Put_Line("Playing: " & (if Is_Playing then "Playing" else "Paused"));
-      for index in 1..Pattern.Number_Of_Instruments loop
+      for index in 1..Number_Of_Instruments loop
          Put_Line(Build_Instrument_Debug_Line(index));
       end loop;
    end;

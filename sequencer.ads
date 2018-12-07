@@ -7,6 +7,9 @@ package Sequencer is
    procedure   Switch_Pattern(Pattern : Character);
    procedure   Update_Pattern(Instrument : Character);
    function    Is_Playing return Boolean;
-   procedure   DebugPrint(Pattern: Pattern_Type);            
+   procedure   Debug_Print(Pattern: Pattern_Type);            
+   
+private    
+   function Build_Instrument_Debug_Line(Instrument_Index : in Integer) return String;
    
 end Sequencer;
