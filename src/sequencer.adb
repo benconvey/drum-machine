@@ -1,5 +1,5 @@
-with Ada.Text_IO, Keyboard_Mappings, Pattern, Step;
-use Ada.Text_IO, Keyboard_Mappings, Pattern, Step;
+with Ada.Text_IO, Keyboard_Mappings, Pattern, Step, Debug_Printer;
+use Ada.Text_IO, Keyboard_Mappings, Pattern, Step, Debug_Printer;
 
 package body Sequencer is
 
@@ -56,38 +56,6 @@ package body Sequencer is
       null;
    end Update_Pattern;
 
-   procedure Debug_Print(Pattern:Pattern_Type) is
-      Number : Active_Step_Type;
-   begin
-      Number := Pattern.Active_Step;
-      Put(ASCII.ESC & "[H");
-      Put_Line("Active Step: " & Active_Step_Type'Image(Number));
-      Put_Line("Playing: " & (if Is_Playing then "Playing" else "Paused"));
-      for index in 1..Number_Of_Instruments loop
-         Put_Line(Build_Instrument_Debug_Line(index));
-      end loop;
-   end;
-
-   function Build_Instrument_Debug_Line(Instrument_Index : in Integer) return String is
-      Instrument_Line :  Step_Row_Type;
-      Result : String(1..32);
-   begin
-      -- Get a line of steps
-      Instrument_Line := This.Steps(Instrument_Index);
-
-
-      for Index in Instrument_Line'Range loop
-
-         Result(Instrument_Index) :=  (if Instrument_Line(Index).Active then Instrument_Line(Index).Instrument else '.');
-
-      end loop;
-
-      return Result;
-
-   end Build_Instrument_Debug_Line;
-
-
-
    Active_Pattern : Pattern_Type := Pattern.Get_Basic_Beat;
 
    task Play_Loop;
@@ -101,9 +69,12 @@ package body Sequencer is
 
          Inner_Loop: loop
 
-            Active_Pattern.Debug_Print;
-
             Active_Pattern.Increment_Active_Step;
+
+            if Print_Debug_Output then
+               Debug_Printer.Print_Sequencer(Play_Control.Get_Is_Playing, Active_Pattern);
+            end if;
+
 
             delay Standard.Duration(1);
 
@@ -115,5 +86,6 @@ package body Sequencer is
          end loop Inner_Loop;
       end loop;
    end Play_Loop;
+
 
 end Sequencer;
