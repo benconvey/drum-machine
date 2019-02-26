@@ -9,7 +9,7 @@ package Debug_Printer is
    Print_Exception : exception;
    
 private 
-   function Build_Instrument_Debug_Line(Instrument_Index : in Integer; Current_Pattern : in Pattern_Type) return String;
+   function Build_Instrument_Debug_Line(Instrument : in Instruments_Type; Current_Pattern : in Pattern_Type) return String;
    
    
    

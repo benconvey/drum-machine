@@ -3,12 +3,13 @@ use Ada.Text_IO, Keyboard_Mappings, Pattern, Step, Debug_Printer;
 
 package body Sequencer is
 
-   protected Play_Control is
+   protected Play_Control  is
       entry Wait_Till_Played;
       procedure Set_Is_Playing(Playing: Boolean);
       function Get_Is_Playing return Boolean;
    private
       Is_Playing : Boolean := false;
+      Is_Paused  : Boolean := True;
    end Play_Control;
 
    protected body Play_Control is
@@ -18,7 +19,7 @@ package body Sequencer is
          null;
       end Wait_Till_Played;
 
-      procedure Set_Is_Playing(Playing : Boolean) is
+      procedure Set_Is_Playing (Playing : Boolean) is
       begin
          Is_Playing := Playing;
       end Set_Is_Playing;
@@ -45,10 +46,9 @@ package body Sequencer is
       return Play_Control.Get_Is_Playing;
    end;
 
-
    procedure Switch_Pattern(Pattern: Character) is
-   begin
-      null;
+   Begin
+      Null;
    end Switch_Pattern;
 
    procedure Update_Pattern(Instrument : Character) is
@@ -56,18 +56,19 @@ package body Sequencer is
       null;
    end Update_Pattern;
 
+
    Active_Pattern : Pattern_Type := Pattern.Get_Basic_Beat;
 
-   task Play_Loop;
+   Task Play_Loop;
 
    task body Play_Loop is
-   begin
 
+   begin
       loop
 
          Play_Control.Wait_Till_Played;
 
-         Inner_Loop: loop
+         Inner_Loop: Loop
 
             Active_Pattern.Increment_Active_Step;
 
@@ -78,10 +79,9 @@ package body Sequencer is
 
             delay Standard.Duration(1);
 
-            if not Play_Control.Get_Is_Playing then
+            if not Play_Control.Get_Is_Playing Then
                exit Inner_Loop;
             end if;
-
 
          end loop Inner_Loop;
       end loop;
