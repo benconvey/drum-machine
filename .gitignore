@@ -2,3 +2,4 @@ default-loc.xml
 gnatinspect.db
 obj/
 .DS_Store
+.vagrant/
