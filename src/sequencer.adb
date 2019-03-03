@@ -3,33 +3,16 @@ use Ada.Text_IO, Keyboard_Mappings, Pattern, Step, Debug_Printer;
 
 package body Sequencer is
 
-   protected Play_Control  is
-      entry Wait_Till_Played;
-      procedure Set_Is_Playing(Playing: Boolean);
-      function Get_Is_Playing return Boolean;
-   private
-      Is_Playing : Boolean := false;
+   Protected Play_Control Is
+      Entry Wait_Till_Played;
+      Procedure Set_Is_Playing (Playing : Boolean);
+      Function Get_Is_Playing Return Boolean;
+   Private
+      Is_Playing : Boolean := False;
       Is_Paused  : Boolean := True;
-   end Play_Control;
+   End Play_Control;
 
-   protected body Play_Control is
-
-      entry Wait_Till_Played when Is_Playing is
-      begin
-         null;
-      end Wait_Till_Played;
-
-      procedure Set_Is_Playing (Playing : Boolean) is
-      begin
-         Is_Playing := Playing;
-      end Set_Is_Playing;
-
-      function Get_Is_Playing return boolean is
-      begin
-         return Is_Playing;
-      end Get_Is_Playing;
-
-   end Play_Control;
+   protected body Play_Control is separate;
 
    procedure start is
    begin
@@ -45,6 +28,7 @@ package body Sequencer is
    begin
       return Play_Control.Get_Is_Playing;
    end;
+
 
    procedure Switch_Pattern(Pattern: Character) is
    Begin
