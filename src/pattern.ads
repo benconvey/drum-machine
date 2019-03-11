@@ -4,6 +4,7 @@ package Pattern is
          
    -- ADT
    type Pattern_Type is tagged private;
+   type Pattern_Access_Type is access all Pattern_Type;
    
    -- ADT components   
    Number_Of_Steps_In_A_Pattern  : constant Integer := 32;
@@ -20,41 +21,40 @@ package Pattern is
    function Get_Steps (This: Pattern_Type) return Steps_Array_Type;   
    function Get_Active_Step(This: Pattern_Type) return Active_Step_Type;
    
-   procedure Increment_Active_Step(This :in out Pattern_Type);
+   procedure Increment_Active_Step(This : in out Pattern_Type);
    
    -- Static methods
-   function Get_Basic_Beat return Pattern_Type;
-   function Get_Trippy_Beat return Pattern_Type;
+   Function Get_Basic_Beat Return Pattern_Type;
+
+     
+       
+
    
 private        
    
    type Pattern_Type is tagged record
-      Tempo             : Integer range 40..400;
+      Tempo             : Integer range 40..400 := 120;
       Length_In_Bars    : Integer := 1;
-      Steps             : Steps_Array_Type;
+      Steps             : Steps_Array_Type 
+        := (Kick        => (Others => Step.Initialise ('K', 0, 0, False)),                                                                              
+            Snare       => (others => Step.Initialise ('S', 0, 0, False)),                         
+            Open_Hat    => (others => Step.Initialise ('H', 0, 0, True)),                         
+            Closed_Hat  => (others => Step.Initialise ('T', 0, 0, False))
+               
+               
+                            );                              
       Active_Step       : Active_Step_Type := 1; -- The first beat of the pattern
    end record;                   
    
    -- Package variable
    Basic_Beat : Pattern_Type := 
      ( Tempo => 125, 
-       Steps => Steps_Array_Type'(
-         Kick        => (1|4|8|12|16|20|24|28 => Step.Initialise('K', 127, 0, True), others => Step.Initialise('K', 0 ,0, false)),         
+       Steps => Steps_Array_Type'(         
+         Kick        => (1 | 4 | 8 | 12 | 16 | 20 | 24 | 28 => Step.Initialise ('K', 127, 0, True), Others => Step.Initialise ('K', 0 , 0, False)),                  
          Snare       =>  (4|12|20|28 => Step.Initialise('S', 127, 0, True), others => Step.Initialise('S', 0 ,0, false)),
          Open_Hat    => (others => Step.Initialise('H', 0, 0, True)),
          Closed_Hat  => (others => Step.Initialise('T', 0, 0, False))         
         ),others => <>
-      );
-   
-   Trippy_Beat : Pattern_Type := 
-     ( Tempo => 70, 
-       Steps => Steps_Array_Type'(
-         Kick        => (1|28 => Step.Initialise('K', 127, 0, True), others => Step.Initialise('K', 0 ,0, false)),         
-         Snare       =>  (20|28 => Step.Initialise('S', 127, 0, True), others => Step.Initialise('S', 0 ,0, false)),
-         Open_Hat    => (others => Step.Initialise('H', 0, 0, True)),
-         Closed_Hat  => (others => Step.Initialise('T', 0, 0, False))         
-        ),others => <>
-      );
-   
+      );      
    
 end Pattern;

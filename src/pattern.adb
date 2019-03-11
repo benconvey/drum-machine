@@ -17,11 +17,6 @@ package body Pattern is
       return Basic_Beat;
    end Get_Basic_Beat;
 
-   function Get_Trippy_Beat return Pattern_Type is
-   begin
-      return Trippy_Beat;
-   end Get_Trippy_Beat;
-
    function Get_Active_Step(This : Pattern_Type) return Active_Step_Type is
    begin
       return This.Active_Step;

@@ -3,13 +3,12 @@ with Sequencer; use Sequencer;
 With Keyboard_Mappings;
 
 procedure Main is
-
    package Keyboard renames Keyboard_Mappings;
-   Button_Pressed : Character;
 
-   task Main_task;
+   task Main_Task;
 
    task body Main_Task is
+      Button_Pressed : Character;
    begin
       loop
          Ada.Text_IO.Get(Button_Pressed);
@@ -23,8 +22,6 @@ procedure Main is
          end case;
       end loop;
    end Main_Task;
-
 begin
    null;
-
 end Main;

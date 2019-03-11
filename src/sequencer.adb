@@ -1,7 +1,10 @@
 with Ada.Text_IO, Keyboard_Mappings, Pattern, Step, Debug_Printer;
 use Ada.Text_IO, Keyboard_Mappings, Pattern, Step, Debug_Printer;
+with Ada.Exceptions; Use Ada.Exceptions;
 
 package body Sequencer is
+
+   Patterns : array (1 .. 8) of aliased Pattern_Type := (1 => Pattern.Get_Basic_Beat, others => <>);
 
    Protected Play_Control Is
       Entry Wait_Till_Played;
@@ -29,10 +32,20 @@ package body Sequencer is
       return Play_Control.Get_Is_Playing;
    end;
 
+   Protected Pattern_Control Is
+      Function Get_Active_Pattern Return Pattern_Access_Type;
+      Procedure Set_Active_Pattern (Pattern : Pattern_Access_Type);
+   Private
+      Active_Pattern : Pattern_Access_Type;
+   End Pattern_Control;
 
-   procedure Switch_Pattern(Pattern: Character) is
+   protected body Pattern_Control is separate;
+
+   Procedure Switch_Pattern (Pattern_Button : Character) Is
+      Character_Index : Integer;
    Begin
-      Null;
+      Character_Index := Character'Pos(Pattern_Button);
+      Pattern_Control.Set_Active_Pattern(Patterns(Character_Index - 48)'access);
    end Switch_Pattern;
 
    procedure Update_Pattern(Instrument : Character) is
@@ -40,26 +53,39 @@ package body Sequencer is
       null;
    end Update_Pattern;
 
+   function Get_Active_Pattern_Number return Character is
+      found_at_index : integer;
+   begin
+      for index in Patterns'Range loop
+         if Patterns(index)'access = Pattern_Control.Get_Active_Pattern then
+            found_at_index := index;
+         end if;
+      end loop;
+      return Character'Val(Found_At_Index + 48);
+   end Get_Active_Pattern_Number;
 
-   Active_Pattern : Pattern_Type := Pattern.Get_Basic_Beat;
 
-   Task Play_Loop;
 
    task body Play_Loop is
-
    begin
-      loop
+
+      Pattern_Control.Set_Active_Pattern(Patterns(1)'Access);
+
+      Loop
 
          Play_Control.Wait_Till_Played;
 
          Inner_Loop: Loop
 
-            Active_Pattern.Increment_Active_Step;
+            Pattern_Control.Get_Active_Pattern.Increment_Active_Step;
 
             if Print_Debug_Output then
-               Debug_Printer.Print_Sequencer(Play_Control.Get_Is_Playing, Active_Pattern);
-            end if;
 
+               Debug_Printer.Print_Sequencer
+                 (Play_Control.Get_Is_Playing,
+                  Pattern_Control.Get_Active_Pattern,
+                  Get_Active_Pattern_Number);
+            end if;
 
             delay Standard.Duration(1);
 
@@ -69,6 +95,12 @@ package body Sequencer is
 
          end loop Inner_Loop;
       end loop;
+   exception
+      when Error : others =>
+         Put_Line ("An exception has occured");
+         Put_Line (Exception_Name (Error));
+         Put (Exception_Message (Error));
+
    end Play_Loop;
 
 

@@ -13,4 +13,7 @@ package Keyboard_Mappings is
    Pattern_6   : constant Character := '6';
    Pattern_7   : constant Character := '7';
    Pattern_8   : constant Character := '8';
+
+   Pattern_Button_Character_Lookup_Table : array (1 .. 8) of Character
+     := (Pattern_1, Pattern_2, Pattern_3, Pattern_4, Pattern_5, Pattern_6, Pattern_7, Pattern_8);
 end Keyboard_Mappings;
