@@ -33,19 +33,23 @@ package body Sequencer is
    end;
 
    Protected Pattern_Control Is
-      Function Get_Active_Pattern Return Pattern_Access_Type;
-      Procedure Set_Active_Pattern (Pattern : Pattern_Access_Type);
+      function Get_Active_Pattern return Pattern_Access_Type;
+      function Get_Active_Pattern_Number return Integer;
+      Procedure Set_Active_Pattern (Pattern : Pattern_Access_Type; Number : Integer);
    Private
       Active_Pattern : Pattern_Access_Type;
+      Pattern_Number : Integer;
    End Pattern_Control;
 
    protected body Pattern_Control is separate;
 
    Procedure Switch_Pattern (Pattern_Button : Character) Is
       Character_Index : Integer;
+      Pattern_Index : Integer;
    Begin
-      Character_Index := Character'Pos(Pattern_Button);
-      Pattern_Control.Set_Active_Pattern(Patterns(Character_Index - 48)'access);
+      Character_Index := Character'Pos (Pattern_Button);
+      Pattern_Index := Character_Index - 48;
+      Pattern_Control.Set_Active_Pattern(Patterns(PAttern_Index)'access, Pattern_Index);
    end Switch_Pattern;
 
    procedure Update_Pattern(Instrument : Character) is
@@ -53,15 +57,9 @@ package body Sequencer is
       null;
    end Update_Pattern;
 
-   function Get_Active_Pattern_Number return Character is
-      found_at_index : integer;
+   function Get_Active_Pattern_Number return Integer is
    begin
-      for index in Patterns'Range loop
-         if Patterns(index)'access = Pattern_Control.Get_Active_Pattern then
-            found_at_index := index;
-         end if;
-      end loop;
-      return Character'Val(Found_At_Index + 48);
+      return Pattern_Control.Get_Active_Pattern_Number;
    end Get_Active_Pattern_Number;
 
 
@@ -69,7 +67,7 @@ package body Sequencer is
    task body Play_Loop is
    begin
 
-      Pattern_Control.Set_Active_Pattern(Patterns(1)'Access);
+      Pattern_Control.Set_Active_Pattern(Patterns(1)'Access, 1);
 
       Loop
 
@@ -84,7 +82,7 @@ package body Sequencer is
                Debug_Printer.Print_Sequencer
                  (Play_Control.Get_Is_Playing,
                   Pattern_Control.Get_Active_Pattern,
-                  Get_Active_Pattern_Number);
+                  Pattern_Control.Get_Active_Pattern_Number);
             end if;
 
             delay Standard.Duration(1);

@@ -7,7 +7,7 @@ package Sequencer is
    procedure   Switch_Pattern(Pattern_Button : Character);
    procedure   Update_Pattern(Instrument : Character);
    function    Is_Playing return Boolean;
-   function    Get_Active_Pattern_Number return Character;
+   function    Get_Active_Pattern_Number return Integer;
    
    Print_Debug_Output : Boolean := True;
    
