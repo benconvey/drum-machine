@@ -3,7 +3,11 @@ Separate (Sequencer)
 Protected Body Pattern_Control Is
 
    Function Get_Active_Pattern Return Pattern_Access_Type Is
-   Begin
+   begin
+      if Active_Pattern.A then
+
+      end if;
+
       Return Active_Pattern;
    End Get_Active_Pattern;
 

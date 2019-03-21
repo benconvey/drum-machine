@@ -43,6 +43,7 @@ package body Sequencer is
 
    protected body Pattern_Control is separate;
 
+   -- This procedure switches the currently looping pattern
    Procedure Switch_Pattern (Pattern_Button : Character) Is
       Character_Index : Integer;
       Pattern_Index : Integer;
@@ -52,6 +53,7 @@ package body Sequencer is
       Pattern_Control.Set_Active_Pattern(Patterns(PAttern_Index)'access, Pattern_Index);
    end Switch_Pattern;
 
+   -- This function records user input notes into the pattern
    procedure Update_Pattern(Instrument : Character) is
    begin
       null;
@@ -65,6 +67,8 @@ package body Sequencer is
 
 
    task body Play_Loop is
+      Active_Pattern : Pattern_Access_Type;
+      Active_Pattern_Index : Integer;
    begin
 
       Pattern_Control.Set_Active_Pattern(Patterns(1)'Access, 1);
@@ -75,17 +79,20 @@ package body Sequencer is
 
          Inner_Loop: Loop
 
-            Pattern_Control.Get_Active_Pattern.Increment_Active_Step;
+            Active_Pattern := Pattern_Control.Get_Active_Pattern;
+            Pattern_Number := Pattern_Control.Get_Active_Pattern_Number;
 
             if Print_Debug_Output then
 
                Debug_Printer.Print_Sequencer
                  (Play_Control.Get_Is_Playing,
-                  Pattern_Control.Get_Active_Pattern,
-                  Pattern_Control.Get_Active_Pattern_Number);
+                  Active_Pattern,
+                  Pattern_Number);
             end if;
 
             delay Standard.Duration(1);
+
+            Active_Pattern.Increment_Active_Step;
 
             if not Play_Control.Get_Is_Playing Then
                exit Inner_Loop;

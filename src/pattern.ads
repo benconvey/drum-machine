@@ -25,10 +25,7 @@ package Pattern is
    
    -- Static methods
    Function Get_Basic_Beat Return Pattern_Type;
-
-     
        
-
    
 private        
    
