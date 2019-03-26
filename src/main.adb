@@ -16,7 +16,7 @@ begin
          case Input is
             when ' '          => Play_Control.Agent.Set_Is_Playing;
             when 'v'          => Play_Control.Agent.Set_Is_Not_Playing;
-            when '1' .. '8'   => Pattern_Control.Agent.Set_Active_Pattern_Number ( Get_Pattern_Number_For_Character ( Input ) );
+            when '1' .. '8'   => Pattern_Control.Agent.Change_Pattern ( Get_Pattern_Number_For_Character ( Input ) );
             when others       => Ada.Text_Io.Put_Line ("Uknown character bro");
          end case;
       end if;

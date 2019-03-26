@@ -8,7 +8,7 @@ package Pattern_Control is
 
       function Get_Active_Pattern return Pattern.Pattern_Access_Type;
       function Get_Active_Pattern_Number return Integer;
-      procedure Set_Active_Pattern_Number (Number : Integer );
+      procedure Change_Pattern (Number : Integer );
       procedure Increment_Active_Step;
    private
       Patterns : Pattern_Array_Type := (1 => Pattern.Get_Basic_Beat, others => <>);

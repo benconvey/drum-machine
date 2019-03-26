@@ -27,6 +27,10 @@ package body Pattern is
       This.Active_Step := This.Active_Step + 1;
    end Increment_Active_Step;
 
+   procedure Set_Active_Step (This: access Pattern_Type; Step : Active_Step_Type) is
+   begin
+      This.Active_Step := Step;
+   end Set_Active_Step;
 
    function Get_Steps(this: Pattern_Type) return Steps_Array_Type is
    begin

@@ -14,11 +14,12 @@ package body Pattern_Control is
          return Active_Pattern_Number;
       end;
 
-      Procedure Set_Active_Pattern_Number (Number : Integer ) Is
+      Procedure Change_Pattern (Number : Integer ) Is
       Begin
          Active_Pattern_Number := Number;
+         Patterns(Active_Pattern_Number).Set_Active_Step(Pattern.Active_Step_Type(0));
          State.Agent.Set_Has_Changed;
-      end Set_Active_Pattern_Number;
+      end Change_Pattern;
 
       procedure Increment_Active_Step is
          Active_Pattern : access Pattern.Pattern_Type := Patterns(Active_Pattern_Number)'Access;

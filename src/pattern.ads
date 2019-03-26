@@ -21,7 +21,8 @@ package Pattern is
    function Get_Steps (This: Pattern_Type) return Steps_Array_Type;   
    function Get_Active_Step(This: access Pattern_Type) return Active_Step_Type;
    
-   procedure Increment_Active_Step(This : access Pattern_Type);
+   procedure Increment_Active_Step (This : access Pattern_Type);
+   procedure Set_Active_Step(This : access Pattern_Type; Step : Active_Step_Type);
    
    -- Static methods
    Function Get_Basic_Beat Return Pattern_Type;
