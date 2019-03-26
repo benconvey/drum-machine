@@ -1,4 +1,4 @@
-with Pattern, Ada.Text_IO, Pattern_Control, Play_Control, State; use Pattern,Ada.Text_IO;
+with Pattern, Ada.Text_IO, Pattern_Control, Play_Control, Record_Control, State; use Pattern,Ada.Text_IO;
 
 package body Debug_Printer is
 
@@ -17,6 +17,7 @@ package body Debug_Printer is
       Put_Line("Active Pattern: " & Current_Pattern_Index'Image);
       Put_Line ("Playing: " & (if Is_Playing then "Playing" else "Paused"));
       Put_Line ("Tempo: " & Current_Pattern.Get_Tempo'Image & "bpm");
+      Put_Line ("Record Armed: " & (if Record_Control.Agent.Is_Record_Armed then "yes" else "no"));
 
       for Instrument in Pattern.Instruments_Type'Range  loop
          Put_Line(Build_Instrument_Debug_Line(Instrument, Current_Pattern));

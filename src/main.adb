@@ -1,4 +1,4 @@
-with Play_Control, Pattern_Control, Ada.Text_IO, Sequencer;
+with Play_Control, Pattern_Control, Record_Control, Ada.Text_IO, Sequencer;
 
 procedure Main is
    Input : Character;
@@ -19,6 +19,7 @@ begin
             when '1' .. '8'   => Pattern_Control.Agent.Change_Pattern ( Get_Pattern_Number_For_Character ( Input ) );
             when '+'          => Pattern_Control.Agent.Increase_Tempo;
             when '-'          => Pattern_Control.Agent.Decrease_Tempo;
+            when 'r'          => Record_Control.Agent.Toggle_Record_Arm;
             when others       => Ada.Text_Io.Put_Line ("Uknown character bro");
          end case;
       end if;
