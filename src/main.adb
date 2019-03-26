@@ -1,27 +1,24 @@
-with Ada.Text_IO; use Ada.Text_IO;
-with Sequencer; use Sequencer;
-With Keyboard_Mappings;
+with Play_Control, Pattern_Control, Ada.Text_IO, Sequencer;
 
 procedure Main is
-   package Keyboard renames Keyboard_Mappings;
+   Input : Character;
 
-   task Main_Task;
-
-   task body Main_Task is
-      Button_Pressed : Character;
+   function Get_Pattern_Number_For_Character (Input_Character : Character) return Integer is
    begin
-      loop
-         Ada.Text_IO.Get(Button_Pressed);
+      return Character'Pos(Input_Character) - 48;
+   end Get_Pattern_Number_For_Character;
 
-         case Button_Pressed is
-            when Keyboard.Play_Button => Sequencer.start;
-            when Keyboard.Stop_Button => Sequencer.stop;
-            when Keyboard.Pattern_1 .. Keyboard.Pattern_8 => Sequencer.Switch_Pattern(Button_Pressed);
-            when Keyboard.Kick_Drum | Keyboard.Snare_Drum => Sequencer.Update_Pattern(Button_Pressed);
-            when others => null;
-         end case;
-      end loop;
-   end Main_Task;
 begin
-   null;
+   loop
+      Ada.Text_Io.Get (Input);
+      case Input is
+         when ' '          => Play_Control.Agent.Set_Is_Playing;
+         when 'v'          => Play_Control.Agent.Set_Is_Not_Playing;
+         when '1' .. '8'   => Pattern_Control.Agent.Set_Active_Pattern_Number( Get_Pattern_Number_For_Character( Input ) );
+         when others       => Ada.Text_Io.Put_Line ("Uknown character bro");
+      end case;
+   end loop;
 end Main;
+
+
+

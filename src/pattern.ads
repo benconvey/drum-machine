@@ -4,7 +4,7 @@ package Pattern is
          
    -- ADT
    type Pattern_Type is tagged private;
-   type Pattern_Access_Type is access all Pattern_Type;
+   type Pattern_Access_Type is not null access constant Pattern_Type;
    
    -- ADT components   
    Number_Of_Steps_In_A_Pattern  : constant Integer := 32;
@@ -19,13 +19,12 @@ package Pattern is
    function Get_Tempo (This: Pattern_Type) return Integer;       
    function Get_Bars (This: Pattern_Type)  return Integer;    
    function Get_Steps (This: Pattern_Type) return Steps_Array_Type;   
-   function Get_Active_Step(This: Pattern_Type) return Active_Step_Type;
+   function Get_Active_Step(This: access Pattern_Type) return Active_Step_Type;
    
-   procedure Increment_Active_Step(This : in out Pattern_Type);
+   procedure Increment_Active_Step(This : access Pattern_Type);
    
    -- Static methods
    Function Get_Basic_Beat Return Pattern_Type;
-       
    
 private        
    
@@ -52,6 +51,7 @@ private
          Open_Hat    => (others => Step.Initialise('H', 0, 0, True)),
          Closed_Hat  => (others => Step.Initialise('T', 0, 0, False))         
         ),others => <>
-      );      
+      );  
+                   
    
 end Pattern;

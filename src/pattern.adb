@@ -17,12 +17,12 @@ package body Pattern is
       return Basic_Beat;
    end Get_Basic_Beat;
 
-   function Get_Active_Step(This : Pattern_Type) return Active_Step_Type is
+   function Get_Active_Step(This : access Pattern_Type) return Active_Step_Type is
    begin
       return This.Active_Step;
    end Get_Active_Step;
 
-   procedure Increment_Active_Step(This : in out Pattern_Type)  is
+   procedure Increment_Active_Step(This : access Pattern_Type)  is
    begin
       This.Active_Step := This.Active_Step + 1;
    end Increment_Active_Step;

@@ -1,8 +1,14 @@
-with Pattern, Ada.Text_IO; use Pattern,Ada.Text_IO;
+with Pattern, Ada.Text_IO, Pattern_Control, Play_Control, State; use Pattern,Ada.Text_IO;
 
 package body Debug_Printer is
 
-   procedure Print_Sequencer(Is_Playing : Boolean; Current_Pattern : access Pattern_Type; Current_Pattern_Index : Integer) is
+   Print_Debug_Output : Boolean := true;
+
+   procedure Print_Sequencer is
+
+      Current_Pattern : aliased Pattern.Pattern_Type := Pattern_Control.Agent.Get_Active_Pattern.all;
+      Current_Pattern_Index : Integer := Pattern_Control.Agent.Get_Active_Pattern_Number;
+      Is_PLaying : Boolean := Play_Control.Agent.Get_Is_Playing;
    begin
 
       Put(ASCII.ESC & "[2J");
@@ -17,7 +23,7 @@ package body Debug_Printer is
 
    end Print_Sequencer;
 
-   function Build_Instrument_Debug_Line(Instrument : in Instruments_Type; Current_Pattern: access Pattern_Type) return String is
+   function Build_Instrument_Debug_Line(Instrument : in Instruments_Type; Current_Pattern: Pattern_Type) return String is
       Result : String(1..32);
       Pattern_Steps : Pattern.Steps_Array_Type;
       Instrument_Steps : Pattern.Step_Row_Type;
@@ -37,5 +43,17 @@ package body Debug_Printer is
       return Result;
 
    end Build_Instrument_Debug_Line;
+
+   task Monitor_State;
+
+   task body Monitor_State is
+   begin
+      if Print_Debug_Output then
+         loop
+            State.Agent.Wait_Till_Changed;
+            Print_Sequencer;
+         end loop;
+      end if;
+   end Monitor_State;
 
 end Debug_Printer;
