@@ -37,5 +37,9 @@ package body Pattern is
       return This.Steps;
    end Get_Steps;
 
+   procedure Set_Tempo (This : access Pattern_Type; New_Tempo : Integer) is
+   begin
+      This.Tempo := New_Tempo;
+   end Set_Tempo;
 
 end Pattern;

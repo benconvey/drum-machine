@@ -15,7 +15,8 @@ package body Debug_Printer is
       Put(ASCII.ESC & "[H");
       Put_Line ("Active Step: " & Current_Pattern.Get_Active_Step'Image);
       Put_Line("Active Pattern: " & Current_Pattern_Index'Image);
-      Put_Line("Playing: " & (if Is_Playing then "Playing" else "Paused"));
+      Put_Line ("Playing: " & (if Is_Playing then "Playing" else "Paused"));
+      Put_Line ("Tempo: " & Current_Pattern.Get_Tempo'Image & "bpm");
 
       for Instrument in Pattern.Instruments_Type'Range  loop
          Put_Line(Build_Instrument_Debug_Line(Instrument, Current_Pattern));

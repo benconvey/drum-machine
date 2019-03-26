@@ -28,6 +28,20 @@ package body Pattern_Control is
          State.Agent.Set_Has_Changed;
       end Increment_Active_Step;
 
+      procedure Increase_Tempo is
+         Active_Pattern : access Pattern.Pattern_Type := Patterns (Active_Pattern_Number)'Access;
+      begin
+         Active_Pattern.Set_Tempo (Active_Pattern.Get_Tempo + 1);
+         State.Agent.Set_Has_Changed;
+      end Increase_Tempo;
+
+      procedure Decrease_Tempo is
+         Active_Pattern : access Pattern.Pattern_Type := Patterns (Active_Pattern_Number)'Access;
+      begin
+         Active_Pattern.Set_Tempo (Active_Pattern.Get_Tempo - 1);
+         State.Agent.Set_Has_Changed;
+      end Decrease_Tempo;
+
    end Agent;
 
 

@@ -16,11 +16,12 @@ package Pattern is
    type Steps_Array_Type is array(Instruments_Type'Range) of Step_Row_Type; 
    
    -- ADT instance methods
-   function Get_Tempo (This: Pattern_Type) return Integer;       
+   function Get_Tempo (This : Pattern_Type) return Integer;       
    function Get_Bars (This: Pattern_Type)  return Integer;    
    function Get_Steps (This: Pattern_Type) return Steps_Array_Type;   
    function Get_Active_Step(This: access Pattern_Type) return Active_Step_Type;
    
+   procedure Set_Tempo (This : access Pattern_Type; New_Tempo : Integer);
    procedure Increment_Active_Step (This : access Pattern_Type);
    procedure Set_Active_Step(This : access Pattern_Type; Step : Active_Step_Type);
    
