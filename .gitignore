@@ -3,3 +3,4 @@ gnatinspect.db
 obj/
 .DS_Store
 .vagrant/
+.idea/
